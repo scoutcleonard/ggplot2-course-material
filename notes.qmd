@@ -1,0 +1,46 @@
+# Required Packages
+
+```{r}
+packages <- c("ggplot2",
+              "readr",
+              "tibble",
+              "tidyr",
+              "forcats",
+              "stringr",
+              "lubridate",
+              "here",
+              "systemfonts",
+              "magick",
+              "scales",
+              "grid",
+              "grDevices",
+              "colorspace",
+              "viridis",
+              "RColorBrewer",
+              "rcartocolor",
+              "scico",
+              "ggsci",
+              "ggthemes",
+              "nord",
+              "MetBrewer",
+              "ggrepel",
+              "ggforce",
+              "ggtext",
+              "ggdist",
+              "ggbeeswarm",
+              "gghalves",
+              "patchwork",
+              "palmerpenguins",
+              "rnaturalearth",
+              "sf",
+              "rmapshaper",
+              "devtools")
+
+install.packages(setdiff(packages,
+                         rownames(installed.packages())))  
+
+## install {colorblindr} and requirements
+remotes::install_github("wilkelab/cowplot")
+remotes::install_github("clauswilke/colorblindr")
+```
+

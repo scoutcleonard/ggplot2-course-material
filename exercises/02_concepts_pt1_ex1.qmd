@@ -1,0 +1,77 @@
+---
+title: "Graphic Design with ggplot2"
+subtitle: "Concepts of the {ggplot2} Package Pt. 1"
+author: "Scout Leonard"
+format: html
+execute:
+  message: false
+  warning: false
+editor: source
+---
+
+# Exercise 1
+
+-   Explore the TfL bike share data visually:\
+    **create a timeseries of reported bike shares on weekend days**
+    -   Highlight day and night encoded by colors and shapes.
+    -   Connect the points of each period with lines.
+        -   What is the difference between `geom_line()` and `geom_path()`?
+    -   Apply your favorite theme to the plot.
+    -   Add meaningful labels.
+-   Save the plot as a vector graphic with a decent plot size.
+
+## Data import
+
+```{r}
+#| label: preparation
+library(tidyverse)
+library(here)
+
+bikes <- read_csv(
+  "https://raw.githubusercontent.com/z3tt/graphic-design-ggplot2/main/data/london-bikes-custom.csv", 
+  col_types = "Dcfffilllddddc"
+)
+
+bikes$season <- fct_inorder(bikes$season)
+
+bikes
+```
+
+## Timeseries of reported bike shares on weekend days
+
+```{r}
+#| label: plot
+
+weekend_bike_shares <- bikes %>% 
+  filter(is_weekend == "TRUE")
+
+ggplot(data = weekend_bike_shares, aes(x = date, y = count, colo)) +
+  geom_point(aes(color = day_night,
+                 shape = day_night)) +
+  geom_line(aes(group = day_night),
+            color = "grey") +
+  theme_minimal(base_family = "Lora",
+                base_size = 10) +
+  labs(title = "Weekend Bikes Shares by Time of Day",
+       subtitle = "2015-2016",
+       x = "Weekend Date (Year - Month)",
+       y = "Number of Reported Bike Shares",
+       color = "Part of Day",
+       shape = "Part of Day") +
+  theme(plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        legend.position = "bottom")
+  
+ggsave(here("exercises", "plots", "02_concepts_pt1_ex1.png"),
+       width = 9, height = 5, bg = "white")
+```
+
+Add your comments and more code here.
+
+
+<br><br><br>
+```{r}
+#| label: i-am-done-what-now
+#| echo: false
+knitr::include_graphics("img/exercise-what-now-sd.png")
+```
