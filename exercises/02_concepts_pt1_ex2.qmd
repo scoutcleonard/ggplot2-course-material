@@ -26,6 +26,7 @@ editor: visual
 ```{r}
 #| label: preparation
 library(tidyverse)
+library(here)
 
 bikes <- read_csv(
   "https://raw.githubusercontent.com/z3tt/graphic-design-ggplot2/main/data/london-bikes-custom.csv", 
@@ -42,10 +43,21 @@ bikes
 ```{r}
 #| label: plot
 
+ggplot(data = bikes, aes(x = reorder(str_wrap(weather_type, 6),
+                                     count),
+                         y = count)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(alpha = 0.1) +
+  theme_minimal(base_family = "Roboto Condensed") +
+  labs(title = "Reported Bike Shares By Weather Type",
+       x = "Weather Type",
+       y = "Number of Reported Bike Shares")
+
+ggsave(here("exercises", "plots", "02_concepts_pt1_ex2.png"),
+       width = 9, height = 5, bg = "white")
 ```
 
 Add your comments and more code here.
-
 
 <br><br><br>
 
